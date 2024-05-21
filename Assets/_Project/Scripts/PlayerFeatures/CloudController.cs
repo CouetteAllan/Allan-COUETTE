@@ -44,4 +44,12 @@ public class CloudController : MonoBehaviour
     {
         GameManager.OnGameStateChange -= OnGameStateChange;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent<IBuilding>(out IBuilding building))
+        {
+            _rain.DoRain(true);
+        }
+    }
 }

@@ -18,5 +18,11 @@ public class CloudMovement : MonoBehaviour
     public void UpdateMovement(Vector3 dir)
     {
         _rb.AddForce(dir * _speed);
+
+        Vector3 targetMovement = dir;
+
+       //AnimationCurve speedcurve = _playerController.IsMoving ? _accelerationCurve : _decelerationCurve;
+       //
+       //_rb.velocity = new Vector2(targetMovement.x * speedcurve.Evaluate(_timerCurve) * _speed, targetMovement.y * speedcurve.Evaluate(_timerCurve) * _speed);
     }
 }

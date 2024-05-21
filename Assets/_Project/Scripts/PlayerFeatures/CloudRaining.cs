@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class CloudRaining : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private ParticleSystem _rainEffect;
 
-    // Update is called once per frame
-    void Update()
+    public void DoRain(bool active)
     {
-        
+        if(active)
+            _rainEffect.Play();
+        else
+            _rainEffect.Stop();
     }
 }
