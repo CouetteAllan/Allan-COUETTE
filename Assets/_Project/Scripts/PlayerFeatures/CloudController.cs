@@ -11,6 +11,8 @@ public class CloudController : MonoBehaviour
     private CloudInputs _inputs;
     private CloudRaining _rain;
 
+    private List<IBuilding> _hoveredBuildings = new();
+
 
     private void Awake()
     {
@@ -47,9 +49,22 @@ public class CloudController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent<IBuilding>(out IBuilding building))
+        if(other.TryGetComponent(out IBuilding building))
         {
             _rain.DoRain(true);
+            building.ExtinguishFire();
+            _hoveredBuildings.Add(building);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out IBuilding building))
+        {
+            building.StopExtinguishFire();
+            _hoveredBuildings.Remove(building);
+            if (_hoveredBuildings.Count <= 0)
+                _rain.DoRain(false);
         }
     }
 }
