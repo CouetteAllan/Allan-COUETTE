@@ -1,6 +1,5 @@
+using DG.Tweening;
 using MoreMountains.Feedbacks;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingVisuals : MonoBehaviour
@@ -10,7 +9,17 @@ public class BuildingVisuals : MonoBehaviour
     [SerializeField] private ParticleSystem[] _fireEffects;
     [SerializeField] private MMFeedbacks _feedbacksStartFire;
     [SerializeField] private MMFeedbacks _feedbacksDestroy;
+    [SerializeField] private Transform _buildingTransform;
+    [SerializeField] private MeshRenderer _buildingRenderer;
 
+    private Material _buildingMaterial;
+    private Color _startColor;
+
+    private void Awake()
+    {
+        _buildingMaterial = _buildingRenderer.material;
+        _startColor = _buildingMaterial.color;
+    }
 
     public void PlayExplosionEffect()
     {
@@ -25,10 +34,12 @@ public class BuildingVisuals : MonoBehaviour
         {
             _fireEffects[i].Play();
         }
+        UpdateBuildingColor(index);
     }
 
     public void StopAllFires()
     {
+        UpdateBuildingColor(-1);
         foreach (var fire in _fireEffects)
         {
             fire.Stop();
@@ -38,11 +49,13 @@ public class BuildingVisuals : MonoBehaviour
     public void StartHealingBuilding()
     {
         _healingEffect.Play();
+        _buildingTransform.DOBlendableScaleBy(new Vector3(0.5f, 1, 0.5f) * .2f, .4f).SetEase(Ease.OutSine).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void StopHealingEffect()
     {
         _healingEffect.Stop();
+        _buildingTransform.DOScale(Vector3.one, .4f).OnComplete(() => _buildingTransform.DOKill());
     }
 
     public void DestroyBuilding()
@@ -50,5 +63,27 @@ public class BuildingVisuals : MonoBehaviour
         //Destroy feedback;
         StopAllFires();
         _feedbacksDestroy.PlayFeedbacks();
+    }
+
+    public void UpdateBuildingColor(int flameIndex)
+    {
+        Color finalColor = new Color();
+        switch (flameIndex)
+        {
+            case 0:
+                finalColor = new Color(1.0f,0.6f,0.6f);
+                break;
+            case 1:
+                finalColor = new Color(1.0f,0.3f,0.3f);
+                break;
+            case 2:
+                finalColor = Color.red;
+                break;
+            default:
+                finalColor = _startColor;
+                break;
+
+        }
+        _buildingMaterial.DOColor(finalColor, 1.5f);
     }
 }

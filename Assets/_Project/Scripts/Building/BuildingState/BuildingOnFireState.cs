@@ -5,7 +5,8 @@ using UnityEngine;
 public class BuildingOnFireState : BaseBuildingState
 {
     private float _healthLoweringPerSecond = 5.0f;
-
+    private bool _firstTreshold = false;
+    private bool _secondTreshold = false;
 
     public override void OnEnterState(Building building)
     {
@@ -15,6 +16,8 @@ public class BuildingOnFireState : BaseBuildingState
             return;
         building.Visuals.PlayExplosionEffect();
         building.Visuals.ActivateFire(0);
+        _firstTreshold = false;
+        _secondTreshold = false;
     }
 
     public override void UpdateState(Building building)
@@ -27,9 +30,17 @@ public class BuildingOnFireState : BaseBuildingState
             building.SwitchState(new BuildingDestroyedState());
         }
 
-        if (building.BuildingHealth < 33.3f)
+        if (building.BuildingHealth < 33.3f && !_secondTreshold)
+        {
             building.Visuals.ActivateFire(2);
-        else if (building.BuildingHealth < 66.6f)
+            _secondTreshold = true;
+
+        }
+        else if (building.BuildingHealth < 66.6f && !_firstTreshold)
+        {
             building.Visuals.ActivateFire(1);
+            _firstTreshold = true;
+
+        }
     }
 }

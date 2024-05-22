@@ -769,6 +769,8 @@ MonoBehaviour:
   - {fileID: 9067308189537024521}
   _feedbacksStartFire: {fileID: 7043992341747644947}
   _feedbacksDestroy: {fileID: 5794905907026035232}
+  _buildingTransform: {fileID: 1304217517899471899}
+  _buildingRenderer: {fileID: 5474604513249387256}
 --- !u!1 &7462571233124693686
 GameObject:
   m_ObjectHideFlags: 0
