@@ -10,6 +10,7 @@ public class CloudController : MonoBehaviour
     private CloudMovement _movement;
     private CloudInputs _inputs;
     private CloudRaining _rain;
+    private CloudAnims _anims;
 
     private List<IBuilding> _hoveredBuildings = new();
 
@@ -19,6 +20,7 @@ public class CloudController : MonoBehaviour
         _movement = GetComponent<CloudMovement>();
         _inputs = GetComponent<CloudInputs>();
         _rain = GetComponent<CloudRaining>();
+        _anims = GetComponent<CloudAnims>();
     }
 
     // Start is called before the first frame update
@@ -52,6 +54,7 @@ public class CloudController : MonoBehaviour
         if(other.TryGetComponent(out IBuilding building))
         {
             _rain.DoRain(true);
+            _anims.RainAnim();
             building.ExtinguishFire();
             _hoveredBuildings.Add(building);
         }
@@ -64,7 +67,10 @@ public class CloudController : MonoBehaviour
             building.StopExtinguishFire();
             _hoveredBuildings.Remove(building);
             if (_hoveredBuildings.Count <= 0)
+            {
                 _rain.DoRain(false);
+                _anims.FloatAnim();
+            }
         }
     }
 }

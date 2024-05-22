@@ -1,3 +1,4 @@
+using CodeMonkey.Utils;
 using System;
 
 public enum GameState
@@ -14,9 +15,14 @@ public class GameManager : Singleton<GameManager>
 {
     public static event Action<GameState> OnGameStateChange;
 
-    public GameState CurrentState { get; private set; }
+    public GameState CurrentState { get; private set; } = GameState.MainMenu;
 
     public CloudController Player {  get; private set; }
+
+    private void Start()
+    {
+        this.ChangeState(GameState.StartGame);
+    }
 
     public void ChangeState(GameState newState)
     {
@@ -29,6 +35,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.MainMenu:
                 break;
             case GameState.StartGame:
+                FunctionTimer.Create(() => ChangeState(GameState.InGame), .5f);
                 break;
             case GameState.InGame:
                 break;

@@ -5,12 +5,24 @@ using UnityEngine;
 
 public class BuildingManager : Singleton<BuildingManager>
 {
-    private List<IBuilding> _buildingsList = new();
-    private List<IBuilding> _buildingsOnFire = new();
+    [SerializeField] private int _nextBuildingOnFireInSeconds = 6;
 
-    public void Start()
+    private List<Building> _buildingsList = new();
+    private List<Building> _buildingsOnFire = new();
+
+    protected override void Awake()
     {
+        base.Awake();
         GameManager.OnGameStateChange += OnGameStateChange;
+        TimeTickSystemDataHandler.OnTick += OnTick;
+    }
+
+    private void OnTick(uint tick)
+    {
+        if(tick % (_nextBuildingOnFireInSeconds * 5) == 0)
+        {
+            SetRandomBuildingOnFire();
+        }
     }
 
     private void OnGameStateChange(GameState newState)
@@ -21,24 +33,32 @@ public class BuildingManager : Singleton<BuildingManager>
 
     private void Init()
     {
-        _buildingsList = this.transform.GetComponentsInChildren<IBuilding>().ToList();
+        _buildingsList = this.transform.GetComponentsInChildren<Building>().ToList();
         //Delay action of 2sec
         FunctionTimer.Create(() => SetRandomBuildingOnFire(), 2.0f);
     }
 
     private void SetRandomBuildingOnFire()
     {
+        if (_buildingsList.Count <= 0)
+            return;
         var building = GetRandomBuilding();
         building.LightBuilding();
         _buildingsOnFire.Add(building);
     }
 
-    private IBuilding GetRandomBuilding()
+    private Building GetRandomBuilding()
     {
         int randIndex = Random.Range(0, _buildingsList.Count);
-        IBuilding building = _buildingsList[randIndex];
+        Building building = _buildingsList[randIndex];
         _buildingsList.Remove(building);
 
         return building;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChange -= OnGameStateChange;
+
     }
 }
