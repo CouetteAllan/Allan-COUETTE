@@ -21,11 +21,11 @@ public class BuildingWaterState : BaseBuildingState
         building.FireHealth -= 35.0f * Time.deltaTime;
         if (building.IsBuildingFullyHealed())
         {
-            building.SwitchState(new BuildingNormalState());
             OnBuildingExtinguished?.Invoke(building);
             _stopSendScore = true;
             ScoreManagerDataHandler.AddScore(3);
             ScoreManagerDataHandler.StopAddingScore();
+            building.SwitchState(new BuildingNormalState());
         }
     }
 

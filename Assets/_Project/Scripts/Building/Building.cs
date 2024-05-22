@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -39,6 +40,17 @@ public class Building : MonoBehaviour, IBuilding
         _currentState.OnEnterState(this);
 
         BuildingDestroyedState.OnBuildingDestroyed += OnBuildingDestroyed;
+        GameManager.OnGameStateChange += OnGameStateChange;
+    }
+
+    private void OnGameStateChange(GameState newState)
+    {
+        if(newState == GameState.Victory)
+        {
+            SwitchState(_normalState);
+            Visuals.PlayVictoryFeedback();
+            Destroy(this);
+        }
     }
 
     private void OnBuildingDestroyed(Building building)

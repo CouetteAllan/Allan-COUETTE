@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class BuildingVisuals : MonoBehaviour
 {
+    [Header("Particle Effects")]
     [SerializeField] private ParticleSystem _explosionEffect;
     [SerializeField] private ParticleSystem _healingEffect;
     [SerializeField] private ParticleSystem[] _fireEffects;
+
+    [Header("All MM Player")]
     [SerializeField] private MMFeedbacks _feedbacksStartFire;
     [SerializeField] private MMFeedbacks _feedbacksDestroy;
+    [SerializeField] private MMFeedbacks _feedbacksVictory;
+
+    [Header("Settings for DOTween")]
     [SerializeField] private Transform _buildingTransform;
     [SerializeField] private MeshRenderer _buildingRenderer;
 
@@ -85,5 +91,15 @@ public class BuildingVisuals : MonoBehaviour
 
         }
         _buildingMaterial.DOColor(finalColor, 1.5f);
+    }
+
+    public void PlayVictoryFeedback()
+    {
+        _feedbacksVictory.PlayFeedbacks();
+        _buildingTransform.DOBlendableScaleBy(Vector3.up * 1.2f, 0.5f).SetEase(Ease.InOutBack).SetLoops(-1, LoopType.Yoyo);
+        _buildingTransform.DOLocalRotate(Vector3.forward * -10.0f, .1f).OnComplete(() =>
+        {
+            _buildingTransform.DOLocalRotate(Vector3.forward * 20.0f, 1.0f).SetEase(Ease.InOutCubic).SetLoops(-1, LoopType.Yoyo).SetRelative();
+        });
     }
 }

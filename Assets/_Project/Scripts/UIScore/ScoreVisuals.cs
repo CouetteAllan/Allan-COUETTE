@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using UnityEngine;
 
@@ -6,11 +7,19 @@ public class ScoreVisuals : MonoBehaviour
 {
     [SerializeField] private MMProgressBar _progressBar;
     [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private MMF_Player _feedbacks;
+
 
     private void Awake()
     {
         ScoreManagerDataHandler.OnUpdateScore += OnUpdateScore;
         ScoreManagerDataHandler.OnStopAddingScore += OnStopAddingScore;
+        ScoreManagerDataHandler.OnMaxScore += OnMaxScore;
+    }
+
+    private void OnMaxScore()
+    {
+        _feedbacks.PlayFeedbacks();
     }
 
     private void OnStopAddingScore()
@@ -36,6 +45,12 @@ public class ScoreVisuals : MonoBehaviour
     {
         ScoreManagerDataHandler.OnUpdateScore -= OnUpdateScore;
         ScoreManagerDataHandler.OnStopAddingScore -= OnStopAddingScore;
+        ScoreManagerDataHandler.OnMaxScore -= OnMaxScore;
 
+    }
+
+    public void ProgressBarFeedBackDone()
+    {
+        GameManager.Instance.ChangeState(GameState.Victory);
     }
 }

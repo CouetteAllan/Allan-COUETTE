@@ -1,5 +1,6 @@
 using CodeMonkey.Utils;
 using System;
+using UnityEngine;
 
 public enum GameState
 {
@@ -14,6 +15,10 @@ public enum GameState
 public class GameManager : Singleton<GameManager>
 {
     public static event Action<GameState> OnGameStateChange;
+
+    [SerializeField] private int _currentLevelIndex = 0;
+
+    public int CurrentLevelIndex => _currentLevelIndex;
 
     public GameState CurrentState { get; private set; } = GameState.MainMenu;
 
@@ -35,6 +40,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.MainMenu:
                 break;
             case GameState.StartGame:
+                ScoreManagerDataHandler.InitScoreManager(_currentLevelIndex);
                 FunctionTimer.Create(() => ChangeState(GameState.InGame), .5f);
                 break;
             case GameState.InGame:
@@ -42,6 +48,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.Pause:
                 break;
             case GameState.Victory:
+                _currentLevelIndex++;
                 break;
             case GameState.GameOver:
                 break;
