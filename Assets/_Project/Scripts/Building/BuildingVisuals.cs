@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,12 @@ public class BuildingVisuals : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _explosionEffect;
     [SerializeField] private ParticleSystem[] _fireEffects;
+    [SerializeField] private MMFeedbacks _feedbacksStartFire;
 
 
     public void PlayExplosionEffect()
     {
+        _feedbacksStartFire.PlayFeedbacks();
         _explosionEffect.Play();
     }
 
