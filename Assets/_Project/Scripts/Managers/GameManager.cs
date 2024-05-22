@@ -1,6 +1,7 @@
 using CodeMonkey.Utils;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -27,6 +28,12 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         this.ChangeState(GameState.StartGame);
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+    }
+
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        this.ChangeState(GameState.StartGame);
     }
 
     public void ChangeState(GameState newState)
@@ -41,7 +48,7 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameState.StartGame:
                 ScoreManagerDataHandler.InitScoreManager(_currentLevelIndex);
-                FunctionTimer.Create(() => ChangeState(GameState.InGame), .5f);
+                FunctionTimer.Create(() => ChangeState(GameState.InGame), 1.0f);
                 break;
             case GameState.InGame:
                 break;
@@ -60,5 +67,11 @@ public class GameManager : Singleton<GameManager>
     public void SetPlayer(CloudController player)
     {
         Player = player;
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(0);
+
     }
 }

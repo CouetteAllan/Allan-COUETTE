@@ -48,7 +48,7 @@ public class BuildingManager : Singleton<BuildingManager>
     {
         _buildingsList = this.transform.GetComponentsInChildren<Building>().ToList();
         //Delay action of 2sec
-        FunctionTimer.Create(() => SetRandomBuildingOnFire(), 2.0f);
+        FunctionTimer.Create(() => SetRandomBuildingOnFire(), 5.0f);
     }
 
     private void SetRandomBuildingOnFire()

@@ -37,4 +37,10 @@ public class VirtualJoystick : MonoBehaviour
 
         _joystickVisual.color = new Color(1, 1, 1, fadeMultiplier);
     }
+
+    private void OnDisable()
+    {
+        CloudInputs.OnMovementStart -= CloudInputs_OnMovementStart;
+        CloudInputs.OnMovementExit -= CloudInputs_OnMovementExit;
+    }
 }

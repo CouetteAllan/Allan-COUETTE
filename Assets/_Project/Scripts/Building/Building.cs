@@ -24,16 +24,21 @@ public class Building : MonoBehaviour, IBuilding
 
     public BaseBuildingState CurrentState => _currentState;
 
-    private BuildingNormalState _normalState = new();
-    private BuildingOnFireState _onFireState = new();
-    private BuildingDestroyedState _destroyedState = new();
-    private BuildingWaterState _waterState = new();
+    private BuildingNormalState _normalState;
+    private BuildingOnFireState _onFireState;
+    private BuildingDestroyedState _destroyedState;
+    private BuildingWaterState _waterState;
 
     private bool _isDestroyed = false;
 
     private void Awake()
     {
         _visuals = GetComponent<BuildingVisuals>();
+
+        _normalState = new();
+        _onFireState = new();
+        _destroyedState = new();
+        _waterState = new();
 
         _previousState = _normalState;
         _currentState = _normalState;
@@ -107,6 +112,12 @@ public class Building : MonoBehaviour, IBuilding
         _currentState.OnExitState(this);
         _currentState = state;
         _currentState.OnEnterState(this);
+    }
+
+    private void OnDestroy()
+    {
+        BuildingDestroyedState.OnBuildingDestroyed -= OnBuildingDestroyed;
+        GameManager.OnGameStateChange -= OnGameStateChange;
     }
 
 

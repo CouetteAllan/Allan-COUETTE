@@ -48,7 +48,8 @@ public class BuildingVisuals : MonoBehaviour
         UpdateBuildingColor(-1);
         foreach (var fire in _fireEffects)
         {
-            fire.Stop();
+            if(fire != null)
+                fire.Stop();
         }
     }
 
@@ -95,11 +96,17 @@ public class BuildingVisuals : MonoBehaviour
 
     public void PlayVictoryFeedback()
     {
+        _buildingTransform.DOKill();
         _feedbacksVictory.PlayFeedbacks();
         _buildingTransform.DOBlendableScaleBy(Vector3.up * 1.2f, 0.5f).SetEase(Ease.InOutBack).SetLoops(-1, LoopType.Yoyo);
         _buildingTransform.DOLocalRotate(Vector3.forward * -10.0f, .1f).OnComplete(() =>
         {
             _buildingTransform.DOLocalRotate(Vector3.forward * 20.0f, 1.0f).SetEase(Ease.InOutCubic).SetLoops(-1, LoopType.Yoyo).SetRelative();
         });
+    }
+
+    private void OnDestroy()
+    {
+        _buildingTransform.DOKill();
     }
 }

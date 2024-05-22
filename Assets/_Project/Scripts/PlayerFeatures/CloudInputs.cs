@@ -14,6 +14,20 @@ public class CloudInputs : MonoBehaviour
     public Vector3 Dir {  get; private set; }
     private void Awake()
     {
+        InitInputs();
+        GameManager.OnGameStateChange += OnGameStateChange;
+    }
+
+    private void OnGameStateChange(GameState state)
+    {
+        if(state == GameState.StartGame)
+        {
+            InitInputs();
+        }
+    }
+
+    private void InitInputs()
+    {
         _inputs = new PlayerInputActions();
         _inputs.Enable();
 
@@ -39,12 +53,13 @@ public class CloudInputs : MonoBehaviour
         Dir = new Vector3(_inputs.Player.Move.ReadValue<Vector2>().x, 0, _inputs.Player.Move.ReadValue<Vector2>().y);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         _inputs.Player.Move.performed -= Move_performed;
         _inputs.Player.Move.started -= Move_started;
         _inputs.Player.Move.canceled -= Move_canceled;
         _inputs.Disable();
+        _inputs = null;
 
     }
 }
