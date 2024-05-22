@@ -15,6 +15,19 @@ public class BuildingManager : Singleton<BuildingManager>
         base.Awake();
         GameManager.OnGameStateChange += OnGameStateChange;
         TimeTickSystemDataHandler.OnTick += OnTick;
+        BuildingWaterState.OnBuildingExtinguished += OnBuildingExtinguished;
+        BuildingDestroyedState.OnBuildingDestroyed += OnBuildingDestroyed;
+    }
+
+    private void OnBuildingDestroyed(Building destroyedBuilding)
+    {
+        _buildingsOnFire.Remove(destroyedBuilding);
+    }
+
+    private void OnBuildingExtinguished(Building extinguishedBuilding)
+    {
+        _buildingsOnFire.Remove(extinguishedBuilding);
+        _buildingsList.Add(extinguishedBuilding);
     }
 
     private void OnTick(uint tick)
@@ -59,6 +72,9 @@ public class BuildingManager : Singleton<BuildingManager>
     private void OnDisable()
     {
         GameManager.OnGameStateChange -= OnGameStateChange;
+        TimeTickSystemDataHandler.OnTick -= OnTick;
+        BuildingWaterState.OnBuildingExtinguished -= OnBuildingExtinguished;
+        BuildingDestroyedState.OnBuildingDestroyed -= OnBuildingDestroyed;
 
     }
 }

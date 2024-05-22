@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IBuilding
 {
+    public BaseBuildingState CurrentState { get; }
     public void ExtinguishFire();
     public void StopExtinguishFire();
     public void LightBuilding();

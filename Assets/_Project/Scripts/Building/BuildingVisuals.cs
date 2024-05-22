@@ -6,8 +6,10 @@ using UnityEngine;
 public class BuildingVisuals : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _explosionEffect;
+    [SerializeField] private ParticleSystem _healingEffect;
     [SerializeField] private ParticleSystem[] _fireEffects;
     [SerializeField] private MMFeedbacks _feedbacksStartFire;
+    [SerializeField] private MMFeedbacks _feedbacksDestroy;
 
 
     public void PlayExplosionEffect()
@@ -29,7 +31,24 @@ public class BuildingVisuals : MonoBehaviour
     {
         foreach (var fire in _fireEffects)
         {
-            fire?.Stop();
+            fire.Stop();
         }
+    }
+
+    public void StartHealingBuilding()
+    {
+        _healingEffect.Play();
+    }
+
+    public void StopHealingEffect()
+    {
+        _healingEffect.Stop();
+    }
+
+    public void DestroyBuilding()
+    {
+        //Destroy feedback;
+        StopAllFires();
+        _feedbacksDestroy.PlayFeedbacks();
     }
 }

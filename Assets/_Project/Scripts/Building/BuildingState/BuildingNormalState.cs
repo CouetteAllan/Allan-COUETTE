@@ -8,6 +8,7 @@ public class BuildingNormalState : BaseBuildingState
     {
         //Do nothing or maybe build the actual building with nice feedback
         building.Visuals.StopAllFires();
+        building.Visuals.StopHealingEffect();
         building.BuildingHealth = 100.0f;
     }
 

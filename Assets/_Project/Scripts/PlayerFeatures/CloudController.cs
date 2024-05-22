@@ -53,6 +53,8 @@ public class CloudController : MonoBehaviour
     {
         if(other.TryGetComponent(out IBuilding building))
         {
+            if (!(building.CurrentState is BuildingOnFireState))
+                return;
             _rain.DoRain(true);
             _anims.RainAnim();
             building.ExtinguishFire();

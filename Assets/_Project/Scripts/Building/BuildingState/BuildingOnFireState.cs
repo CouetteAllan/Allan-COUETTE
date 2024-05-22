@@ -9,8 +9,9 @@ public class BuildingOnFireState : BaseBuildingState
 
     public override void OnEnterState(Building building)
     {
+        building.Visuals.StopHealingEffect();
         //TODO: start fire
-        if (building.PreviousState == this)
+        if (building.PreviousState is BuildingWaterState)
             return;
         building.Visuals.PlayExplosionEffect();
         building.Visuals.ActivateFire(0);

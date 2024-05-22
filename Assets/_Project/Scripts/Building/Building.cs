@@ -6,24 +6,29 @@ using UnityEngine;
 public class Building : MonoBehaviour, IBuilding
 {
     
-    private BuildingVisuals _visuals;
     public BuildingVisuals Visuals => _visuals;
+    public float FireHealth { get { return _fireHealth; } set { _fireHealth = value; } }
+    public float BuildingHealth { get { return _buildingHealth; } set { _buildingHealth = value; } }
+
+
+    private BuildingVisuals _visuals;
 
     private float _fireHealth = 0.0f;
-    public float FireHealth { get { return _fireHealth; } set { _fireHealth = value; } }
-
-
     private float _buildingHealth = 100.0f;
-    public float BuildingHealth { get { return _buildingHealth; } set { _buildingHealth = value; } }
+
 
     private BaseBuildingState _currentState;
     private BaseBuildingState _previousState;
     public BaseBuildingState PreviousState => _previousState;
 
+    public BaseBuildingState CurrentState => _currentState;
+
     private BuildingNormalState _normalState = new();
     private BuildingOnFireState _onFireState = new();
     private BuildingDestroyedState _destroyedState = new();
     private BuildingWaterState _waterState = new();
+
+    private bool _isDestroyed = false;
 
     private void Awake()
     {
@@ -32,6 +37,19 @@ public class Building : MonoBehaviour, IBuilding
         _previousState = _normalState;
         _currentState = _normalState;
         _currentState.OnEnterState(this);
+
+        BuildingDestroyedState.OnBuildingDestroyed += OnBuildingDestroyed;
+    }
+
+    private void OnBuildingDestroyed(Building building)
+    {
+        if (building != this)
+            return;
+
+        //Cannot receive any instructions and destroy colliders.
+        _isDestroyed = true;
+        _visuals.DestroyBuilding();
+        this.GetComponent<Collider>().enabled = false;
     }
 
     private void Update()
@@ -71,6 +89,8 @@ public class Building : MonoBehaviour, IBuilding
 
     public void SwitchState(BaseBuildingState state)
     {
+        if (_isDestroyed)
+            return;
         _previousState = _currentState;
         _currentState = state;
         _currentState.OnEnterState(this);
