@@ -57,7 +57,7 @@ namespace CodeMonkey.Utils {
 
         // Trigger [action] every [timer], execute [testDestroy] after triggering action, destroy if returns true
         public static FunctionPeriodic Create(Action action, Func<bool> testDestroy, float timer) {
-            return Create(action, testDestroy, timer, "", false);
+            return Create(action, testDestroy, timer, "", false,true,false);
         }
 
         public static FunctionPeriodic Create(Action action, float timer) {

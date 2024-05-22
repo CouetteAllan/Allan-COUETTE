@@ -20,6 +20,11 @@ public class BuildingOnFireState : BaseBuildingState
         _secondTreshold = false;
     }
 
+    public override void OnExitState(Building building)
+    {
+        
+    }
+
     public override void UpdateState(Building building)
     {
         //TODO: actual fire lowering building health

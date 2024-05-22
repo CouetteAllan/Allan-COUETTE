@@ -12,6 +12,13 @@ public class BuildingDestroyedState : BaseBuildingState
         //Destroy Building graph and send event
         building.Visuals.StopAllFires();
         OnBuildingDestroyed?.Invoke(building);
+        ScoreManagerDataHandler.AddScore(-4);
+        ScoreManagerDataHandler.StopAddingScore();
+    }
+
+    public override void OnExitState(Building building)
+    {
+        
     }
 
     public override void UpdateState(Building building)

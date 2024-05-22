@@ -632,7 +632,7 @@ MonoBehaviour:
   TargetRectTransform: {fileID: 0}
   ShakeSpeed: 30
   ShakeRange: 0.5
-  ShakeMainDirection: {x: 1, y: 1, z: 1}
+  ShakeMainDirection: {x: 0, y: 0, z: 0}
   RandomizeDirection: 0
   ShakeAltDirection: {x: 0, y: 1, z: 0}
   RandomizeDirectionOnPlay: 0
@@ -900,6 +900,7 @@ MonoBehaviour:
   FeedbacksList:
   - rid: 5823158130967052299
   - rid: 5823158130967052293
+  - rid: 5823158130967052311
   - rid: 5823158130967052295
   - rid: 5823158130967052303
   - rid: 5823158130967052297
@@ -909,9 +910,9 @@ MonoBehaviour:
   - rid: 5823158130967052301
   - rid: 5823158130967052291
   - rid: 5823158130967052302
-  - rid: 5823158130967052307
   - rid: 5823158130967052306
   - rid: 5823158130967052304
+  - rid: 5823158130967052309
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -1098,7 +1099,7 @@ MonoBehaviour:
         RandomizeDuration: 0
         RandomDurationMultiplier: {x: 0.5, y: 2}
         UseRange: 1
-        RangeDistance: 3
+        RangeDistance: 6
         UseRangeFalloff: 0
         RangeFalloff:
           serializedVersion: 2
@@ -1130,7 +1131,7 @@ MonoBehaviour:
         Owner: {fileID: 5794905907026035232}
         DebugActive: 0
         TargetShaker: {fileID: 4109713233762794890}
-        Duration: 0.5
+        Duration: 0.7
         ResetShakerValuesAfterShake: 1
         ResetTargetValuesAfterShake: 1
         ShakeSpeed: 20
@@ -1651,11 +1652,11 @@ MonoBehaviour:
         ParticlesPrefab: {fileID: 198572881580852744, guid: 7e48ba6b1b968764490bbc70b66e3fe1,
           type: 3}
         RandomParticlePrefabs: []
-        ForceSetActiveOnPlay: 0
+        ForceSetActiveOnPlay: 1
         StopOnReset: 0
         DeclaredDuration: 0
         PositionMode: 1
-        InstantiateParticlesPosition: {fileID: 0}
+        InstantiateParticlesPosition: {fileID: 485543896620726085}
         TargetWorldPosition: {x: 0, y: 0, z: 0}
         Offset: {x: 0, y: 0, z: 0}
         NestParticles: 1
@@ -1855,9 +1856,9 @@ MonoBehaviour:
         SquashAndStretchTarget: {fileID: 1304217517899471899}
         Mode: 0
         Axis: 3
-        AnimateScaleDuration: 0.3
+        AnimateScaleDuration: 0.8
         RemapCurveZero: 1
-        RemapCurveOne: 1.5
+        RemapCurveOne: 2
         Offset: 0
         AnimateCurve:
           serializedVersion: 2
@@ -2050,7 +2051,7 @@ MonoBehaviour:
           TimescaleMode: 0
           ExcludeFromHoldingPauses: 0
           ContributeToTotalDuration: 1
-          InitialDelay: 0
+          InitialDelay: 0.6
           CooldownDuration: 0
           InterruptsOnStop: 1
           NumberOfRepeats: 0
@@ -2113,7 +2114,7 @@ MonoBehaviour:
         AnimateScaleTarget: {fileID: 1304217517899471899}
         AnimateScaleDuration: 0.3
         RemapCurveZero: 1
-        RemapCurveOne: 0.01
+        RemapCurveOne: 0.001
         Offset: 0
         AnimateX: 1
         AnimateScaleTweenX:
@@ -2402,7 +2403,7 @@ MonoBehaviour:
           ButtonText: 
         Owner: {fileID: 5794905907026035232}
         DebugActive: 0
-        PauseDuration: 0.5
+        PauseDuration: 0
         RandomizePauseDuration: 0
         MinPauseDuration: 1
         MaxPauseDuration: 3
@@ -2410,12 +2411,12 @@ MonoBehaviour:
         ScriptDriven: 0
         AutoResume: 0
         AutoResumeAfter: 0.25
-    - rid: 5823158130967052307
-      type: {class: MMF_ScaleShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
+    - rid: 5823158130967052309
+      type: {class: MMF_Rotation, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: 58089093
-        Label: Scale Shake
+        UniqueID: -1207925709
+        Label: Rotation
         ChannelMode: 0
         Channel: 0
         MMChannelDefinition: {fileID: 0}
@@ -2425,7 +2426,7 @@ MonoBehaviour:
           TimescaleMode: 0
           ExcludeFromHoldingPauses: 0
           ContributeToTotalDuration: 1
-          InitialDelay: 0.5
+          InitialDelay: 0
           CooldownDuration: 0
           InterruptsOnStop: 1
           NumberOfRepeats: 0
@@ -2484,36 +2485,232 @@ MonoBehaviour:
           ButtonText: 
         Owner: {fileID: 5794905907026035232}
         DebugActive: 0
-        TargetShaker: {fileID: 8102925326316383091}
-        Duration: 0.5
-        ResetShakerValuesAfterShake: 0
-        ResetTargetValuesAfterShake: 0
-        ShakeSpeed: 20
-        ShakeRange: 2
-        ShakeMainDirection: {x: 1, y: 1, z: 1}
-        RandomizeDirection: 0
-        ShakeAltDirection: {x: 0, y: 1, z: 0}
-        RandomizeDirectionOnPlay: 0
-        AddDirectionalNoise: 1
-        DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
-        DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
-        RandomnessSeed: {x: 0, y: 0, z: 0}
-        RandomizeSeedOnShake: 1
-        UseAttenuation: 1
-        AttenuationCurve:
+        AnimateRotationTarget: {fileID: 1304217517899471899}
+        Mode: 0
+        RotationSpace: 1
+        AnimateRotationDuration: 1
+        RemapCurveZero: 0
+        RemapCurveOne: 720
+        AnimateX: 0
+        AnimateRotationTweenX:
+          MMTweenDefinitionType: 1
+          MMTweenCurve: 4
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.3
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+        AnimateY: 1
+        AnimateRotationTweenY:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 6
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.3
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+        AnimateZ: 0
+        AnimateRotationTweenZ:
+          MMTweenDefinitionType: 1
+          MMTweenCurve: 4
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.3
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+        AllowAdditivePlays: 0
+        DetermineRotationOnPlay: 0
+        ToDestinationSpace: 0
+        DestinationAngles: {x: 0, y: 180, z: 0}
+        ToDestinationTween:
+          MMTweenDefinitionType: 0
+          MMTweenCurve: 10
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+        AnimateRotationX:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        AnimateRotationY:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        AnimateRotationZ:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        ToDestinationCurve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+    - rid: 5823158130967052311
+      type: {class: MMF_SquashAndStretch, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
+      data:
+        Active: 1
+        UniqueID: 1082374373
+        Label: Squash and Stretch
+        ChannelMode: 0
+        Channel: 0
+        MMChannelDefinition: {fileID: 0}
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          PlayCount: 0
+          LimitPlayCount: 0
+          MaxPlayCount: 3
+          SetPlayCountToZeroOnReset: 0
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        AutomatedTargetAcquisition:
+          Mode: 0
+          ChildIndex: 0
+        RandomizeOutput: 0
+        RandomMultiplier: {x: 0.8, y: 1}
+        RandomizeDuration: 0
+        RandomDurationMultiplier: {x: 0.5, y: 2}
+        UseRange: 0
+        RangeDistance: 5
+        UseRangeFalloff: 0
+        RangeFalloff:
           serializedVersion: 2
           m_Curve:
           - serializedVersion: 3
             time: 0
-            value: 0
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 0.5
             value: 1
             inSlope: 0
             outSlope: 0
@@ -2533,6 +2730,54 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+        RemapRangeFalloff: {x: 0, y: 1}
+        AutomaticShakerSetupButton:
+          ButtonText: 
+        Owner: {fileID: 5794905907026035232}
+        DebugActive: 0
+        SquashAndStretchTarget: {fileID: 1304217517899471899}
+        Mode: 1
+        Axis: 0
+        AnimateScaleDuration: 0.8
+        RemapCurveZero: 1
+        RemapCurveOne: 2
+        Offset: 0
+        AnimateCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.3
+            value: 1.5
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        AllowAdditivePlays: 0
+        DetermineScaleOnPlay: 0
+        DestinationScale: 2
 --- !u!1 &8492353025732128890
 GameObject:
   m_ObjectHideFlags: 0

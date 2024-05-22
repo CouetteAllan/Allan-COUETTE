@@ -12,6 +12,11 @@ public class BuildingNormalState : BaseBuildingState
         building.BuildingHealth = 100.0f;
     }
 
+    public override void OnExitState(Building building)
+    {
+        
+    }
+
     public override void UpdateState(Building building)
     {
         //Movement ? anims ?

@@ -6,4 +6,5 @@ public abstract class BaseBuildingState
 {
     public abstract void OnEnterState(Building building);
     public abstract void UpdateState(Building building);
+    public abstract void OnExitState(Building building);
 }

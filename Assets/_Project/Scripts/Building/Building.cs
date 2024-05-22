@@ -92,6 +92,7 @@ public class Building : MonoBehaviour, IBuilding
         if (_isDestroyed)
             return;
         _previousState = _currentState;
+        _currentState.OnExitState(this);
         _currentState = state;
         _currentState.OnEnterState(this);
     }
