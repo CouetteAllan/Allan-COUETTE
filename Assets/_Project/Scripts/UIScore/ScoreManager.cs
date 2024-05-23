@@ -22,6 +22,8 @@ public class ScoreManager : MonoBehaviour
 
     private void OnAddScore(int bonusScore)
     {
+        if (PlayerScore >= _maxScore)
+            return;
         PlayerScore = Mathf.Clamp(PlayerScore + bonusScore,0,_maxScore);
         this.UpdateScore(PlayerScore,_maxScore);
 

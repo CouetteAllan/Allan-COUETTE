@@ -16,6 +16,8 @@ public class BuildingManager : Singleton<BuildingManager>
     private List<Building> _buildingsList;
     private List<Building> _buildingsOnFire;
 
+    private int _nbActiveBuilding = 7;
+
     protected override void Awake()
     {
         base.Awake();
@@ -29,6 +31,11 @@ public class BuildingManager : Singleton<BuildingManager>
     {
         _buildingsOnFire.Remove(destroyedBuilding);
         OnUpdateBuildingOnFire?.Invoke();
+        if(_buildingsList.Count <= 0 && _buildingsOnFire.Count <= 0)
+        {
+            //Set game over
+            GameManager.Instance.ChangeState(GameState.GameOver);
+        }
     }
 
     private void OnBuildingExtinguished(Building extinguishedBuilding)
@@ -40,7 +47,7 @@ public class BuildingManager : Singleton<BuildingManager>
 
     private void OnTick(uint tick)
     {
-        if(tick % (_nextBuildingOnFireInSeconds * 5) == 0)
+        if(tick % (_nextBuildingOnFireInSeconds * 5) == 0 && _buildingsList.Count > 0)
         {
             SetRandomBuildingOnFire();
         }
@@ -63,8 +70,22 @@ public class BuildingManager : Singleton<BuildingManager>
         _buildingsList = new List<Building>();
         _buildingsOnFire = new List<Building>();
         _buildingsList = this.transform.GetComponentsInChildren<Building>().ToList();
-        //Delay action of 2sec
+
+        _nextBuildingOnFireInSeconds = Mathf.Clamp(_nextBuildingOnFireInSeconds - GameManager.Instance.CurrentLevelIndex * 2, 6, 12);
+
+        SetBuildingActive();
+        //Delay action of 5sec
         FunctionTimer.Create(() => SetFirstBuildingOnFire(), 5.0f);
+    }
+
+    private void SetBuildingActive()
+    {
+        _nbActiveBuilding = Mathf.Clamp(_nbActiveBuilding + GameManager.Instance.CurrentLevelIndex * 2,0,_buildingsList.Count); 
+        for (int i = _nbActiveBuilding - 1; i < _buildingsList.Count; i++)
+        {
+            _buildingsList[i].gameObject.SetActive(false);
+        }
+        _buildingsList = _buildingsList.Take(_nbActiveBuilding).ToList();
     }
     private void SetFirstBuildingOnFire()
     {

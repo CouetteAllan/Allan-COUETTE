@@ -1,6 +1,7 @@
 using DG.Tweening;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using System.Collections;
 using UnityEngine;
 
 public class ScoreVisuals : MonoBehaviour
@@ -9,7 +10,8 @@ public class ScoreVisuals : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private MMF_Player _feedbacks;
 
-
+    private Coroutine _countDownCoroutine;
+    private float _countdownTimer = 0;
     private void Awake()
     {
         ScoreManagerDataHandler.OnUpdateScore += OnUpdateScore;
@@ -24,7 +26,7 @@ public class ScoreVisuals : MonoBehaviour
 
     private void OnStopAddingScore()
     {
-        StopUpdateScoreAndHideBar();
+
     }
 
     private void OnUpdateScore(int score,int maxScore)
@@ -32,12 +34,21 @@ public class ScoreVisuals : MonoBehaviour
         _progressBar.TextValueMultiplier = maxScore;
         _canvasGroup.DOFade(1.0f, .5f);
         _progressBar.UpdateBar(score,0,maxScore);
-    }
+        _countdownTimer = 2.5f;
+        if (_countDownCoroutine != null)
+            StopCoroutine(_countDownCoroutine);
+        _countDownCoroutine = StartCoroutine(CountdownCoroutine());
 
-    private void StopUpdateScoreAndHideBar()
+    }
+    IEnumerator CountdownCoroutine()
     {
+        while(_countdownTimer > 0)
+        {
+            _countdownTimer -= Time.deltaTime;
+            yield return null;
+        }
         _canvasGroup.DOKill();
-        _canvasGroup.DOFade(0.0f, .7f).SetDelay(2.5f);
+        _canvasGroup.DOFade(0.0f, .8f);
     }
 
 

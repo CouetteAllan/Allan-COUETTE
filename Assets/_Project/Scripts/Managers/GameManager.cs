@@ -45,7 +45,7 @@ public class GameManager : Singleton<GameManager>
         switch (newState)
         {
             case GameState.MainMenu:
-                break;
+                break;  
             case GameState.StartGame:
                 ScoreManagerDataHandler.InitScoreManager(_currentLevelIndex);
                 FunctionTimer.Create(() => ChangeState(GameState.InGame), 1.0f);
@@ -58,6 +58,7 @@ public class GameManager : Singleton<GameManager>
                 _currentLevelIndex++;
                 break;
             case GameState.GameOver:
+                _currentLevelIndex = 0;
                 break;
         }
 
