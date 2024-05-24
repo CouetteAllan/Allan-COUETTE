@@ -7,6 +7,7 @@ using UnityEngine;
 public class BuildingManager : Singleton<BuildingManager>
 {
     public static event Action OnUpdateBuildingOnFire;
+    public static event Action<Building> OnSetOnFireBuilding;
 
     [SerializeField] private int _nextBuildingOnFireInSeconds = 6;
     [SerializeField] private Building[] _firstBuildingsOnFire = new Building[3];
@@ -85,7 +86,7 @@ public class BuildingManager : Singleton<BuildingManager>
         {
             _buildingsList[i].gameObject.SetActive(false);
         }
-        _buildingsList = _buildingsList.Take(_nbActiveBuilding).ToList();
+        _buildingsList = _buildingsList.Take(_nbActiveBuilding - 1).ToList();
     }
     private void SetFirstBuildingOnFire()
     {
@@ -95,6 +96,7 @@ public class BuildingManager : Singleton<BuildingManager>
         building.LightBuilding();
         _buildingsOnFire.Add(building);
         OnUpdateBuildingOnFire?.Invoke();
+        OnSetOnFireBuilding?.Invoke(building);
     }
 
     private void SetRandomBuildingOnFire()
@@ -105,6 +107,7 @@ public class BuildingManager : Singleton<BuildingManager>
         building.LightBuilding();
         _buildingsOnFire.Add(building);
         OnUpdateBuildingOnFire?.Invoke();
+        OnSetOnFireBuilding?.Invoke(building);
     }
 
     private Building GetRandomBuilding()

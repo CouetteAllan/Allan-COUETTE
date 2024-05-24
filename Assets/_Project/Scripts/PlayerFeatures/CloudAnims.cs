@@ -25,8 +25,17 @@ public class CloudAnims : MonoBehaviour
 
     public void FloatAnim()
     {
+        _visuals.DOKill();
         _visuals.DOBlendableLocalMoveBy(Vector3.down * _floatingValue, 1.0f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
         _visuals.DOLocalRotate(new Vector3(1,90,0) * 9.0f, 1.0f);
         _visuals.DOLocalRotate(new Vector3(-1, 90, 0) * 9.0f, 2.0f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo).SetDelay(1.1f);
+    }
+
+    public void VictoryAnim()
+    {
+        _visuals.DOKill();
+        _visuals.DOLocalMove(Vector3.right * -2.0f, .3f);
+        _visuals.DOLocalMove(Vector3.right * 2.0f, 1.0f).SetEase(Ease.InOutCubic).SetLoops(-1, LoopType.Yoyo).SetDelay(.3f);
+        _visuals.DOBlendableLocalRotateBy(Vector3.forward * 360.0f, 1f, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).SetLoops(-1,LoopType.Yoyo).SetDelay(.3f);
     }
 }

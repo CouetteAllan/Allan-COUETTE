@@ -24,7 +24,7 @@ public class GameOverScreen : MonoBehaviour
             _feedbackLose.PlayFeedbacks();
             _backgroundImage.DOFade(.8f, .5f);
             _canvasGroup.DOFade(1.0f, 1.5f).SetDelay(.5f);
-            _buttonsTransform.DOMoveY(-600.0f, 1.5f).SetEase(Ease.OutBounce).SetDelay(.5f);
+            _buttonsTransform.DOLocalMoveY(-600.0f, 1.5f).SetEase(Ease.OutBounce).SetDelay(.5f);
         }
     }
 

@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,15 +13,39 @@ public class CloudController : MonoBehaviour
     private CloudRaining _rain;
     private CloudAnims _anims;
 
-    private List<IBuilding> _hoveredBuildings = new();
+    private List<IBuilding> _hoveredBuildings;
 
 
     private void Awake()
     {
+        _hoveredBuildings = new List<IBuilding>();
         _movement = GetComponent<CloudMovement>();
         _inputs = GetComponent<CloudInputs>();
         _rain = GetComponent<CloudRaining>();
         _anims = GetComponent<CloudAnims>();
+        BuildingWaterState.OnBuildingExtinguished += OnBuildingExtinguished;
+        BuildingManager.OnSetOnFireBuilding += OnSetOnFireBuilding;
+    }
+
+    //In case a building is set on fire and the cloud is already on top of that one
+    private void OnSetOnFireBuilding(Building building)
+    {
+        if (_hoveredBuildings.Contains(building))
+        {
+            _rain.DoRain(true);
+            _anims.RainAnim();
+            building.ExtinguishFire();
+        }
+    }
+
+    //This function is here to stop the rain anim after the fire go extinct
+    private void OnBuildingExtinguished(Building building)
+    {
+        if (_hoveredBuildings.Contains(building) && _hoveredBuildings.Count <= 1)
+        {
+            _rain.DoRain(false);
+            _anims.FloatAnim();
+        }
     }
 
     // Start is called before the first frame update
@@ -36,6 +61,10 @@ public class CloudController : MonoBehaviour
             case GameState.StartGame:
                 GameManager.Instance.SetPlayer(this);
                 break;
+            case GameState.Victory:
+                _rain.DoRain(false);
+                _anims.VictoryAnim();
+                break;
         }
     }
 
@@ -47,6 +76,8 @@ public class CloudController : MonoBehaviour
     private void OnDisable()
     {
         GameManager.OnGameStateChange -= OnGameStateChange;
+        BuildingWaterState.OnBuildingExtinguished -= OnBuildingExtinguished;
+        BuildingManager.OnSetOnFireBuilding -= OnSetOnFireBuilding;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,6 +92,7 @@ public class CloudController : MonoBehaviour
             _hoveredBuildings.Add(building);
         }
     }
+
 
     private void OnTriggerExit(Collider other)
     {
